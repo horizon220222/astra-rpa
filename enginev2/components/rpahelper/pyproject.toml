@@ -1,0 +1,21 @@
+[project]
+name = "rpahelper"
+version = "1.0.0"
+description = "rpahelper."
+requires-python = ">=3.13"
+
+dependencies = [
+    "requests",
+    "astronverse-actionlib",
+    "rpa_param_utils"
+]
+
+[tool.uv.sources]
+astronverse-actionlib = {path = "../../shared/astronverse-actionlib", editable = true}
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rpahelper"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,0 +1,30 @@
+[project]
+name = "rpabrowser"
+version = "1.0.0"
+description = "rpabrowser."
+requires-python = ">=3.13"
+
+dependencies = [
+    "astronverse-actionlib",
+    "rpasoftware",
+    "rpawindow",
+    "rpagui",
+    "requests",
+    "rpaencrypt",
+    "table_helper",
+    "pythonnet>=3.0.3; sys_platform == 'win32'",
+    "locator>=2.6.59; sys_platform == 'win32'",
+    "locator_linux>=1.0.5; sys_platform == 'linux'"
+]
+
+[tool.uv.sources]
+astronverse-actionlib = {path = "../../shared/astronverse-actionlib", editable = true}
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rpabrowser"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+

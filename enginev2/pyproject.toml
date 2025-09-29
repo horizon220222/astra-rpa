@@ -17,6 +17,8 @@ dependencies = [
     "astronverse-locator",
     "astronverse-websocket-client",
     "astronverse-websocket-server",
+    "astronverse-tools",
+    "rpareport"
 ]
 
 [tool.uv.sources]
@@ -32,6 +34,8 @@ astronverse-browser-plugin = {path = "./shared/astronverse-browser-plugin", edit
 astronverse-locator = {path = "./shared/astronverse-locator", editable = true}
 astronverse-websocket-client = {path = "./shared/astronverse-websocket-client ", editable = true}
 astronverse-websocket-server = {path = "./shared/astronverse-websocket-server", editable = true}
+astronverse-tools = {path = "./shared/astronverse-tools", editable = true}
+rpareport = {path = "./components/rpareport", editable = true}
 
 [dependency-groups]
 dev = [

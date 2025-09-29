@@ -28,7 +28,7 @@ class Svc:
         # 端口号:
         self.__local_port__: int = 8002
         # 路由端口[随机分配]
-        self.rpa_route_port: int = 11002
+        self.rpa_route_port: int = 13159
         # 调度器端口[随机分配]
         self.scheduler_port: int = self.get_validate_port(ComponentType.SCHEDULER)
         # trigger端口[随机分配]

@@ -9,7 +9,7 @@ REM ============================================
 set PYTHON_EXE=.\Python313\python.exe
 set SEVENZ_EXE=C:\Program Files\7-Zip\7z.exe
 set BUILD_DIR=build
-set PYTHON_CODE_DIR=%BUILD_DIR%\python_code
+set PYTHON_CORE_DIR=%BUILD_DIR%\python_core
 set DIST_DIR=%BUILD_DIR%\dist
 set ARCHIVE_DIST_DIR=../frontend/packages/tauri-app/src-tauri/resources/
 
@@ -75,13 +75,13 @@ REM ============================================
 echo 创建构建目录结构...
 if not exist %BUILD_DIR% mkdir %BUILD_DIR%
 if not exist %DIST_DIR% mkdir %DIST_DIR%
-if not exist %PYTHON_CODE_DIR% mkdir %PYTHON_CODE_DIR%
+if not exist %PYTHON_CORE_DIR% mkdir %PYTHON_CORE_DIR%
 if not exist %ARCHIVE_DIST_DIR% mkdir %ARCHIVE_DIST_DIR%
 for %%i in ("%PYTHON_EXE%") do set PYTHON_SOURCE_DIR=%%~di%%~pi
-if not exist "%PYTHON_CODE_DIR%\python.exe" (
+if not exist "%PYTHON_CORE_DIR%\python.exe" (
     echo 复制Python环境...
     if exist "%PYTHON_SOURCE_DIR%" (
-        xcopy /E /I /Y "%PYTHON_SOURCE_DIR%\*" "%PYTHON_CODE_DIR%\"
+        xcopy /E /I /Y "%PYTHON_SOURCE_DIR%\*" "%PYTHON_CORE_DIR%\"
         if errorlevel 1 (
             echo Python目录复制失败
             exit /b 1
@@ -119,7 +119,7 @@ REM 6. 安装包
 REM ============================================
 
 echo 升级pip...
-%PYTHON_CODE_DIR%\python.exe -m pip install --upgrade pip 2>nul
+%PYTHON_CORE_DIR%\python.exe -m pip install --upgrade pip 2>nul
 
 echo 批量安装包...
 
@@ -132,7 +132,7 @@ set /a CURRENT_PACKAGE=0
 for %%f in ("%DIST_DIR%\*.whl") do (
     set /a CURRENT_PACKAGE+=1
     echo [!CURRENT_PACKAGE!/%TOTAL_PACKAGES%] 安装 %%f...
-    uv pip install --link-mode=copy --python "%PYTHON_CODE_DIR%\python.exe" --find-links="%DIST_DIR%" "%%f"
+    uv pip install --link-mode=copy --python "%PYTHON_CORE_DIR%\python.exe" --find-links="%DIST_DIR%" "%%f"
     if errorlevel 1 (
         echo [!CURRENT_PACKAGE!/%TOTAL_PACKAGES%] %%f 安装失败
         exit /b 1
@@ -144,15 +144,15 @@ REM ============================================
 REM 7. 打包发布
 REM ============================================
 
-echo 正在压缩python_code目录...
-cd /d "%PYTHON_CODE_DIR%"
-"%SEVENZ_EXE%" a -t7z "%~dp0%ARCHIVE_DIST_DIR%\python_code.7z" "*" >nul
+echo 正在压缩python_core目录...
+cd /d "%PYTHON_CORE_DIR%"
+"%SEVENZ_EXE%" a -t7z "%~dp0%ARCHIVE_DIST_DIR%\python_core.7z" "*" >nul
 cd /d "%~dp0"
 if errorlevel 1 (
-    echo python_code目录压缩失败
+    echo python_core目录压缩失败
     exit /b 1
 )
-echo ✓ python_code目录压缩成功，文件保存至: %ARCHIVE_DIST_DIR%\python_code.7z
+echo ✓ python_core目录压缩成功，文件保存至: %ARCHIVE_DIST_DIR%\python_core.7z
 
 echo.
 echo ============================================

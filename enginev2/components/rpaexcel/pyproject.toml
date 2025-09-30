@@ -1,7 +1,7 @@
 [project]
-name = "rpaexecel"
+name = "rpaexcel"
 version = "1.0.0"
-description = "rpaexecel."
+description = "rpaexcel."
 requires-python = ">=3.13"
 
 dependencies = [
@@ -16,7 +16,7 @@ dependencies = [
 astronverse-actionlib = {path = "../../shared/astronverse-actionlib", editable = true}
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/rpaexecel"]
+packages = ["src/rpaexcel"]
 
 [build-system]
 requires = ["hatchling"]

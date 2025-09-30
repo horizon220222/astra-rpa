@@ -16,7 +16,7 @@ class VenvManager:
         if not os.path.exists(svc.config.app_server.venv_base_dir):
             return res
         for temp_venv in os.listdir(svc.config.app_server.venv_base_dir):
-            if re.search("^temp_venv\d+$", temp_venv):
+            if re.search(r"^temp_venv\d+$", temp_venv):
                 res.append(temp_venv)
         res.sort()
         return res
@@ -30,7 +30,7 @@ class VenvManager:
         if not os.path.exists(self.svc.config.app_server.venv_base_dir):
             return project_venv_list
         for venv in os.listdir(self.svc.config.app_server.venv_base_dir):
-            if re.search("^\d+$", venv):
+            if re.search(r"^\d+$", venv):
                 project_venv_list.append(os.path.join(self.svc.config.app_server.venv_base_dir, venv))
         return project_venv_list
 
@@ -97,6 +97,7 @@ class VenvManager:
 
         # 2.3 如果python_base本身是虚拟环境添加base_env.pth
         if "venv" in svc.config.app_server.python_base:
+            # todo 如果虚拟环境中也有pth,不会继承。
             base_env_pth = os.path.join(env_dir_temp, "Lib", "site-packages", "base_env.pth")
             with open(base_env_pth, "w") as f:
                 f.write(os.path.join(os.path.dirname(os.path.dirname(svc.config.app_server.python_base)), "Lib", "site-packages"))

@@ -6,6 +6,7 @@ from ..environment.package import Package
 from ..environment.venv import VenvManager
 from ..server import IServer
 from ..terminal.terminal import Terminal
+from ..setup.setup import Process
 
 
 class RpaSchedulerAsyncServer(IServer):
@@ -116,3 +117,17 @@ class CheckPickProcessAliveServer(IServer):
                 logger.exception("check_pick_process error: {}".format(e))
             finally:
                 time.sleep(1)
+
+
+class CheckStartPidExitsServer(IServer):
+
+    def __init__(self, svc):
+        super().__init__(
+            svc=svc,
+            name="check_start_pid",
+            level=ServerLevel.NORMAL,
+            run_is_async=True,
+        )
+
+    def run(self):
+        Process.pid_exist_check()

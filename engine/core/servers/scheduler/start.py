@@ -15,6 +15,7 @@ from .core.servers.async_server import (
     CheckPickProcessAliveServer,
     RpaSchedulerAsyncServer,
     TerminalAsyncServer,
+    CheckStartPidExitsServer
 )
 from .core.servers.core_server import (
     RpaBrowserConnectorServer,
@@ -53,6 +54,8 @@ def start():
         svc.set_config(conf)
 
         # 3. 环境检测
+        from .core.setup.setup import Process
+        Process.kill_all_zombie()
         repair_pywin32_dependence(svc)
         linux_env_check()
 
@@ -62,8 +65,9 @@ def start():
         server_mg.register(RpaBrowserConnectorServer(svc))
         server_mg.register(RpaSchedulerAsyncServer(svc))
         server_mg.register(TerminalAsyncServer(svc))
-        server_mg.register(AtomicUploadAsyncServer(svc))
+        # server_mg.register(AtomicUploadAsyncServer(svc))
         server_mg.register(CheckPickProcessAliveServer(svc))
+        server_mg.register(CheckStartPidExitsServer(svc))
 
         server_mg.register(svc.trigger_server)
         if svc.vnc_server:
